@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #050505;
+  margin: 0;
+}
+
+/* 圆锥渐变流光旋转（CSS Houdini custom property） */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes spin-gradient {
+  to { --angle: 360deg; }
+}
+
+.animate-spin-gradient {
+  background-image: conic-gradient(from var(--angle), #1DB954, #8B5CF6, #EC4899, #1DB954);
+  animation: spin-gradient 8s linear infinite;
+}
+
+/* 深海网格呼吸流动 */
+@keyframes mesh-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-mesh-flow {
+  animation: mesh-flow 15s ease infinite;
+  background-size: 200% 200%;
+}
+
+/* 流星雨 */
+.meteor {
+  position: absolute;
+  background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, var(--opacity)) 100%);
+  transform-origin: right center;
+  animation: meteor-shower var(--duration) linear infinite;
+  animation-delay: var(--delay);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.meteor::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -1px;
+  transform: translateY(-50%);
+  width: calc(var(--thickness) * 3.5);
+  height: calc(var(--thickness) * 3.5);
+  background: rgba(255, 255, 255, 1);
+  border-radius: 50%;
+  box-shadow: 0 0 8px 2px rgba(255, 255, 255, var(--opacity)),
+              0 0 20px 5px rgba(29, 185, 84, calc(var(--opacity) * 0.4));
+}
+
+@keyframes meteor-shower {
+  0% { transform: rotate(var(--angle)) translateX(-50px); opacity: 0; }
+  15% { opacity: 1; }
+  70% { opacity: 0; }
+  100% { transform: rotate(var(--angle)) translateX(var(--distance)); opacity: 0; }
+}
+
+/* 自定义滚动条 */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
